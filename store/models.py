@@ -1,10 +1,11 @@
-from random import choices
 from django.db import models
+
 
 class Collection(models.Model):
     title = models.CharField(max_length = 255)
     featured_products = models.ForeignKey("Product",
      on_delete=models.SET_NULL, null=True, related_name= '+')#'Product' resolve circular dependency
+
 
 class Promotion(models.Model):
     description = models.CharField(max_length=255)
@@ -41,7 +42,8 @@ class Customer(models.Model):
     email = models.EmailField(unique = True)
     phone_number = models.CharField(max_length= 255)
     birthdate = models.DateField(null = True, blank = True)
-    membership = models.CharField(max_length=1, choices= MEMBERSHIP, default=MEMBERSHIP_BRONZE) # best practice is to define this values separately.
+    membership = models.CharField(max_length=1, choices=MEMBERSHIP, default=MEMBERSHIP_BRONZE) # best practice is to define this values separately.
+    
     class Meta:
         db_table = 'store_customers'
         indexes = [

@@ -7,5 +7,22 @@
 <h2>hello into else statement</h2>
 {% endif %}
 
+<ul>
+    {% comment %} shows products whose price is less than 20 {% endcomment %}
+    {%for product in products%}
+    <li>{{product.title}}-{{product.collection.title}}</li>
+    {% comment %} <li>{{product.title}}</li>#getting only title query {% endcomment %}
+    {% comment %} <li>{{product}}</li> {% endcomment %}
+
+    {% comment %} for orders loop{% endcomment %}
+    {%for order in orders%}
+    <li>{{order.id}}-{{order.customer.first_name}}</li>
+
+    {% endfor %}
+</ul>
+
+{% comment %} rendering the result objects {% endcomment %}
+{{ result }}
+
 </body>
 </html>
