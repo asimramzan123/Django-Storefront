@@ -162,6 +162,7 @@ def say_hello(request):
     collection.featured_products = Product(pk = 1)
     collection.save()
 
+
     # short hand in single line :), better to use above traditional approach
     collection = Collection.objects.create(name = 'Video Games', featured_product_id = 1)
 
