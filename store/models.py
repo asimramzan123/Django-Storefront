@@ -5,6 +5,13 @@ class Collection(models.Model):
     title = models.CharField(max_length = 255)
     featured_products = models.ForeignKey("Product",
      on_delete=models.SET_NULL, null=True, related_name= '+')#'Product' resolve circular dependency
+    
+    def __str__(self) -> str:
+        return self.title
+
+    # default sorting of collection objects, ordering list of fields
+    class Meta:
+        ordering = ['title']
 
 
 class Promotion(models.Model):
@@ -23,6 +30,12 @@ class Product(models.Model):
     collection = models.ForeignKey(Collection, on_delete=models.PROTECT)# accidently deleting collection should't delete product.
     promotions =models.ManyToManyField(Promotion)
 
+    # def __str__(self) -> str:
+    #     return self.title
+
+    # # default sorting of collection objects, ordering list of fields
+    # class Meta:
+    #     ordering = ['title']
 
 class Customer(models.Model):
     # if any changes comes, you need to change once here.

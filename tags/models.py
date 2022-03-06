@@ -6,7 +6,8 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 class TaggedItemManager(models.Manager):
     def get_tags_for(self, obj_type, obj_id):
 
-        content_type = ContentType.objects.get_for_models(obj_type) # rep content type table in DB
+        # rep content type table in DB
+        content_type = ContentType.objects.get_for_models(obj_type) 
 
         #return TaggedItem objects, # preload tag field(select_related('tag'))
         return TaggedItem.objects.select_related('tag').filter(      
@@ -19,15 +20,20 @@ class Tags(models.Model):
 
 class TaggedItem(models.Model):
     objects = TaggedItemManager()
+
+
     # finding what tag applied to what objects
     tag = models.ForeignKey(Tags, on_delete=models.CASCADE)
-    # finding which object is tagged with current tag.
-    """ To define generic relationship 3 things we need to define:
-    1: should know about taggedItem contentType(video, article, cloth etch)
-    2: should know about taggedItem ID for getting record.
-    3. reading actual/content object using generic field.
+
+
+    """ 
+    --> finding which object is tagged with current tag.
+        To define generic relationship 3 things we need to define:
+        1: should know about taggedItem contentType(video, article, cloth etc.)
+        2: should know about taggedItem ID for getting record.
+        3. reading actual/content object using generic field.
     """
-    content_type =models.ForeignKey(ContentType, on_delete=models.CASCADE) #on delete, remove all items.
+    content_type =models.ForeignKey(ContentType, on_delete=models.CASCADE) # CASCADE (on delete, remove all items).
     object_id = models.PositiveIntegerField()# gen +ve PK, bad for floating PK
     content_obj = GenericForeignKey()
 
